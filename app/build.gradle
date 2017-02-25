@@ -1,0 +1,165 @@
+apply plugin: 'com.android.application'
+apply plugin: "me.tatarka.retrolambda"
+
+
+def gitVersionCode() {
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    cmd.execute().text.trim().toInteger()
+}
+
+def gitVersionTag() {
+    def cmd = 'git describe --tags'
+    def version = cmd.execute().text.trim()
+
+    def pattern = "-(\\d+)-g"
+    def matcher = version =~ pattern
+
+    if (matcher) {
+        version = version.substring(0, matcher.start()) + "." + matcher[0][1]
+    } else {
+        version = version + ".0"
+    }
+
+    return version
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.iamwent.gank"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        resConfigs "en", "zh"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+        }
+
+        release {
+            storeFile file(KEYSTORE_PATH)
+            storePassword STORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        debug {
+            useProguard false
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles 'proguard-common.pro', 'proguard-rules.pro'
+            testProguardFiles 'proguard-common.pro', 'proguardTest-rules.pro'
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles 'proguard-common.pro', 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "Gank_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    productFlavors {
+        GooglePlay {
+        }
+        fir {
+
+        }
+    }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release') &&
+                variant.getFlavors().get(0).name.equals('mock')) {
+            // remove mock release
+            variant.setIgnore(true);
+        }
+    }
+
+    // Avoid heavy computations
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals('release')) {
+            variant.mergedFlavor.versionCode = gitVersionCode()
+            variant.mergedFlavor.versionName = gitVersionTag()
+        }
+    }
+
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
+        ignore 'InvalidPackage'
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // android
+    compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
+    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
+    compile "com.android.support:design:${rootProject.ext.supportVersion}"
+    compile "com.android.support:support-annotations:${rootProject.ext.supportVersion}"
+
+    // library
+    compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjavaVersion}"
+    compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroidVersion}"
+    compile "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit2Version}"
+    compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit2Version}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofit2Version}"
+    compile "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttp3Version}"
+    compile "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okhttp3Version}"
+    compile "com.github.bumptech.glide:glide:${rootProject.ext.glideVersion}"
+    compile "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
+    compile "com.github.chrisbanes:PhotoView:${rootProject.ext.photoViewVersion}"
+    compile "com.tbruyelle.rxpermissions2:rxpermissions:${rootProject.ext.rxpermissions2Version}"
+    compile "com.jakewharton.timber:timber:${rootProject.ext.timberVersion}"
+    compile "com.jakewharton:butterknife:${rootProject.ext.butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.butterknifeVersion}"
+
+    // leakcanary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:${rootProject.ext.leakcanaryVersion}"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
+
+    // unit test
+    testCompile "junit:junit:${rootProject.ext.junitVersion}"
+    testCompile "org.mockito:mockito-core:${rootProject.ext.mockitoVersion}"
+
+    // ui test
+    // Optional -- UI testing with Espresso
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile "com.android.support:support-annotations:${rootProject.ext.supportVersion}"
+    androidTestCompile "com.android.support.test:runner:${rootProject.ext.testrunnerVersion}"
+    androidTestCompile "com.android.support.test:rules:${rootProject.ext.testrunnerVersion}"
+    // Optional -- Hamcrest library
+    androidTestCompile "org.hamcrest:hamcrest-library:${rootProject.ext.hamcrestVersion}"
+    // Optional -- UI testing with UI Automator
+    androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:${rootProject.ext.uiautomatorVersion}"
+}

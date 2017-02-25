@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gank.IO</string>
+
+    <string name="action_about">关于</string>
+    <string name="action_calendar">日期</string>
+    <string name="action_category">干货类型</string>
+    <string name="action_copy_url">复制链接</string>
+    <string name="action_open_url">打开链接</string>
+    <string name="action_refresh">刷新</string>
+    <string name="action_save_image">保存图片</string>
+    <string name="action_search">搜索</string>
+    <string name="action_setting">设置</string>
+    <string name="action_share">分享</string>
+    <string name="action_submit">提交</string>
+
+    <string name="alert_request_write_external_storage">我们需要存储权限以保存图片！</string>
+    <string name="alert_save_image">是否保存图片到本地？</string>
+
+    <string name="alert_submit">大爷，让子弹飞一会儿～</string>
+    <string name="alert_submit_error">不好意思大爷，好像有点儿问题～</string>
+    <string name="alert_submit_success">老大, 所有提交数据一切正常!</string>
+
+    <string name="alert_too_early">这一天 Gank 还没出生呢^_^</string>
+    <string name="alert_too_late">未来的这一天我们会相遇的！</string>
+
+    <string name="hint_desc">干货简要描述</string>
+    <string name="hint_search">在 Gank 搜一下</string>
+    <string name="hint_url">干货 URL 地址</string>
+
+    <string name="content_good_gank">"阅读优秀干货的定义\n· 功能专一，文档完备，国际化，能加速开发的开源库或者框架\n· 新颖技术架构的完整 App 项目\n· 原创，深入浅出的文章（非简单入门）\n· 激发灵感的展示性项目"</string>
+</resources>

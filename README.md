@@ -1,4 +1,4 @@
-# gank.io ![android](https://img.shields.io/badge/android-21%2B-brightgreen.svg)
+# gank.io [![android](https://img.shields.io/badge/android-21%2B-brightgreen.svg)](https://android-arsenal.com/api?level=21)[![release](https://img.shields.io/badge/release-v0.1.1-blue.svg)](https://github.com/iamwent/gank.io/releases/tag/v0.1.1)[![license](https://img.shields.io/badge/license-GPL3-lightgrey.svg)](https://github.com/iamwent/gank.io/blob/master/LICENSE)
 
 Yet another Android Client for gank.io
 

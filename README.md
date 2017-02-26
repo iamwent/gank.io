@@ -2,7 +2,7 @@
 
 Yet another Android Client for gank.io
 
-<img src="./screenshot/icon.png"/>
+<img src="./screenshot/icon.png" width="%50"/>
 
 ## Screenshots
 

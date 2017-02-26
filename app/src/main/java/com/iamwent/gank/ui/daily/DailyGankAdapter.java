@@ -129,6 +129,7 @@ class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void bind(Gank gank) {
             Glide.with(itemView.getContext())
                     .load(gank.url)
+                    .placeholder(cover.getDrawable())
                     .into(cover);
 
             String dateStr = gank.publishedAt.substring(0, 10).replace('-', '/');

@@ -13,7 +13,7 @@
     <string name="action_save_image">Save Image</string>
     <string name="action_submit">Submit</string>
 
-    <string-array name="gank_types">
+    <string-array name="gank_types" translatable="false">
         <item>Android</item>
         <item>iOS</item>
         <item>休息视频</item>

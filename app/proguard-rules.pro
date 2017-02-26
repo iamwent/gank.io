@@ -17,7 +17,7 @@
 #}
 
 # types
-#-keep class com.drakeet.rebase.api.type.**{*;}
+-keep class com.iamwent.gank.data.bean**{*;}
 
 -repackageclasses
 -allowaccessmodification
@@ -32,7 +32,7 @@
 }
 
 # butterknife
--keep public class * implements butterknife.Unbinder { public <init>(...); }
+-keep public class * implements butterknife.Unbinder { public <init>(**, android.view.View); }
 -keep class butterknife.*
 -keepclasseswithmembernames class * { @butterknife.* <methods>; }
 -keepclasseswithmembernames class * { @butterknife.* <fields>; }
@@ -73,7 +73,6 @@
   **[] $VALUES;
   public *;
 }
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 # gson
 -keep class sun.misc.Unsafe { *; }

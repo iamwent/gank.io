@@ -60,6 +60,8 @@ public class DailyActivity extends BaseActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        ivBg.setVisibility(View.VISIBLE);
+
         presenter = new DailyPresenter(this, GankRepository.getInstance(this));
 
         Calendar calendar = Calendar.getInstance();

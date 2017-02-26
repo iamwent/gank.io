@@ -1,3 +1,4 @@
+
 apply plugin: 'com.android.application'
 apply plugin: "me.tatarka.retrolambda"
 
@@ -41,6 +42,10 @@ android {
 
     signingConfigs {
         debug {
+            storeFile file(DEBUG_PATH)
+            storePassword DEBUG_PASSWORD
+            keyAlias DEBUG_ALIAS
+            keyPassword DEBUG_PASSWORD
         }
 
         release {
@@ -53,9 +58,13 @@ android {
 
     buildTypes {
         debug {
-            useProguard false
-            minifyEnabled false
-            shrinkResources false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "_debug"
+
+            debuggable true
+            useProguard true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles 'proguard-common.pro', 'proguard-rules.pro'
             testProguardFiles 'proguard-common.pro', 'proguardTest-rules.pro'
         }
@@ -88,13 +97,13 @@ android {
     }
 
     // Remove mockRelease as it's not needed.
-    android.variantFilter { variant ->
-        if (variant.buildType.name.equals('release') &&
-                variant.getFlavors().get(0).name.equals('mock')) {
-            // remove mock release
-            variant.setIgnore(true);
-        }
-    }
+//    android.variantFilter { variant ->
+//        if (variant.buildType.name.equals('release') &&
+//                variant.getFlavors().get(0).name.equals('mock')) {
+//            // remove mock release
+//            variant.setIgnore(true);
+//        }
+//    }
 
     // Avoid heavy computations
     applicationVariants.all { variant ->
@@ -119,11 +128,13 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+
     // android
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:design:${rootProject.ext.supportVersion}"
     compile "com.android.support:support-annotations:${rootProject.ext.supportVersion}"
+
 
     // library
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjavaVersion}"
@@ -141,10 +152,12 @@ dependencies {
     compile "com.jakewharton:butterknife:${rootProject.ext.butterknifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.butterknifeVersion}"
 
+
     // leakcanary
-    debugCompile "com.squareup.leakcanary:leakcanary-android:${rootProject.ext.leakcanaryVersion}"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
-    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
+//    debugCompile "com.squareup.leakcanary:leakcanary-android:${rootProject.ext.leakcanaryVersion}"
+//    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
+//    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
+
 
     // unit test
     testCompile "junit:junit:${rootProject.ext.junitVersion}"

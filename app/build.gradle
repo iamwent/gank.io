@@ -59,12 +59,11 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            versionNameSuffix "_debug"
 
             debuggable true
-            useProguard true
-            minifyEnabled true
-            shrinkResources true
+            useProguard false
+            minifyEnabled false
+            shrinkResources false
             proguardFiles 'proguard-common.pro', 'proguard-rules.pro'
             testProguardFiles 'proguard-common.pro', 'proguardTest-rules.pro'
         }
@@ -72,24 +71,15 @@ android {
         release {
             debuggable false
             minifyEnabled true
+            useProguard true
             shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles 'proguard-common.pro', 'proguard-rules.pro'
-
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = "Gank_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }
         }
     }
 
     productFlavors {
-        GooglePlay {
+        google {
         }
         fir {
 
@@ -97,19 +87,33 @@ android {
     }
 
     // Remove mockRelease as it's not needed.
-//    android.variantFilter { variant ->
-//        if (variant.buildType.name.equals('release') &&
-//                variant.getFlavors().get(0).name.equals('mock')) {
-//            // remove mock release
-//            variant.setIgnore(true);
-//        }
-//    }
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release') &&
+                variant.getFlavors().get(0).name.equals('mock')) {
+            // remove mock release
+            variant.setIgnore(true);
+        }
+    }
 
     // Avoid heavy computations
     applicationVariants.all { variant ->
         if (variant.buildType.name.equals('release')) {
-            variant.mergedFlavor.versionCode = gitVersionCode()
-            variant.mergedFlavor.versionName = gitVersionTag()
+
+            def code = gitVersionCode();
+            def name = gitVersionTag();
+
+            variant.mergedFlavor.versionCode = code;
+            variant.mergedFlavor.versionName = name;
+
+            variant.outputs.each { output ->
+                def outputFile = output.outputFile;
+
+                def suffix = variant.productFlavors[0].name;
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    def fileName = "Gank_${name}_${code}_${suffix}.apk"
+                    output.outputFile = new File(outputFile.parent, fileName)
+                }
+            }
         }
     }
 

@@ -86,3 +86,7 @@
     public static int v(...);
     public static int i(...);
 }
+
+# bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

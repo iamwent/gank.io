@@ -133,6 +133,10 @@ public class DailyActivity extends BaseActivity
                 return true;
             case R.id.action_search:
                 return true;
+            case R.id.action_setting:
+                return true;
+            case R.id.action_about:
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -35,6 +35,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "google"]
+
         resConfigs "en", "zh"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -73,6 +75,7 @@ android {
             minifyEnabled true
             useProguard true
             shrinkResources true
+            zipAlignEnabled true
             signingConfig signingConfigs.release
             proguardFiles 'proguard-common.pro', 'proguard-rules.pro'
 
@@ -106,6 +109,10 @@ android {
         fir {
 
         }
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [BUGLY_CHANNEL_VALUE: name]
     }
 
     // Remove mockRelease as it's not needed.
@@ -162,7 +169,7 @@ dependencies {
 //    debugCompile "com.squareup.leakcanary:leakcanary-android:${rootProject.ext.leakcanaryVersion}"
 //    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
 //    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
-
+    compile 'com.tencent.bugly:crashreport:latest.release'
 
     // unit test
     testCompile "junit:junit:${rootProject.ext.junitVersion}"

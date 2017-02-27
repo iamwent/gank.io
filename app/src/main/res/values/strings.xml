@@ -30,6 +30,9 @@
     <string name="alert_submit">Submitting…</string>
     <string name="alert_submit_success">老大, 所有提交数据一切正常!</string>
     <string name="alert_submit_error">Ops！有点问题，快检查一下～</string>
+    <string name="alert_submit_desc_too_short">Desc is too short!</string>
+    <string name="alert_submit_url_empty">Url is empty!</string>
+    <string name="alert_submit_url_error">Url error! Must start with http/https!</string>
 
     <string name="alert_save_image">Saving to Gallery?</string>
     <string name="alert_request_write_external_storage">We need the Permission to save Images!</string>
@@ -38,11 +41,16 @@
     <string name="hint_url">干货 URL 地址</string>
     <string name="hint_desc">干货简要描述</string>
 
-    <string name="content_good_gank">阅读优秀干货的定义：\n
-        · 功能专一，文档完备，国际化，能加速开发的开源库或者框架\n
+    <string name="good_gank_title">优秀干货的定义：</string>
+    <string name="good_gank_content">\n
+        · 功能专一，文档完备，国际化\n
+        · 能加速开发的开源库或者框架\n
         · 新颖技术架构的完整 App 项目\n
         · 原创，深入浅出的文章（非简单入门）\n
         · 激发灵感的展示性项目
     </string>
+    <string name="label_submit_type">Type:</string>
+    <string name="label_submit_who">Submitter:</string>
+    <string name="hint_submit_who">Your name, or github id</string>
 
 </resources>

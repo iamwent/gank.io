@@ -2,8 +2,10 @@ package com.iamwent.gank.ui.submit;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -38,11 +40,16 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
     @BindView(R.id.et_desc)
     EditText etDesc;
 
+    @BindView(R.id.et_who)
+    EditText etWho;
+
+    private static final String KEY_DRIVER = "submit.KEY_DRIVER";
+
     private SubmitContract.Presenter presenter;
 
     private String url;
     private String desc;
-    private String type;
+    private String who;
 
     private ProgressDialog dialog;
 
@@ -50,6 +57,8 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
 
     private String[] types;
     private int typeIndex = 0;
+
+    private SharedPreferences preferences;
 
     @Override
     protected int provideContentViewLayoutResId() {
@@ -60,6 +69,11 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDisplayHomeAsUpEnabled(false);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        who = preferences.getString(KEY_DRIVER, "");
+        etWho.setText(who);
+        etWho.setSelection(who.length());
 
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -88,8 +102,7 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
             etDesc.setSelection(desc.length());
         }
 
-        etUrl.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-        etDesc.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        etDesc.requestFocus();
     }
 
     @Override
@@ -103,7 +116,7 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
     public void success() {
         dialog.dismiss();
 
-        Toast.makeText(this, R.string.alert_submit, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.alert_submit_success, Toast.LENGTH_SHORT).show();
 
         handler.postDelayed(this::finish, 1000);
     }
@@ -123,9 +136,7 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
             return;
         }
 
-        String who = getString(R.string.app_name);
-
-        type = tvType.getText().toString();
+        String type = tvType.getText().toString();
 
         presenter.submit(url, desc, who, type, BuildConfig.DEBUG);
         showDialog();
@@ -135,17 +146,30 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
         url = etUrl.getText().toString();
         if (TextUtils.isEmpty(url)) {
             etUrl.requestFocus();
+            Toast.makeText(this, R.string.alert_submit_url_empty, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!URLUtil.isValidUrl(url)) {
+        } else if (!URLUtil.isHttpsUrl(url) && !URLUtil.isHttpUrl(url)) {
             etUrl.requestFocus();
+            Toast.makeText(this, R.string.alert_submit_url_error, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         desc = etDesc.getText().toString();
         if (TextUtils.isEmpty(desc) || desc.length() < 5) {
             etDesc.requestFocus();
+            Toast.makeText(this, R.string.alert_submit_desc_too_short, Toast.LENGTH_SHORT).show();
             return false;
         }
+
+        who = etWho.getText().toString();
+        if (TextUtils.isEmpty(who)) {
+            etWho.requestFocus();
+            Toast.makeText(this, R.string.hint_submit_who, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        preferences.edit()
+                .putString(KEY_DRIVER, who)
+                .apply();
 
         return true;
     }

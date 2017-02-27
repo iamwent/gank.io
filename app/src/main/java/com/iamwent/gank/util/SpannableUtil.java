@@ -15,8 +15,6 @@ import android.text.style.RelativeSizeSpan;
 
 public final class SpannableUtil {
 
-    private static final String GANK_CONTENT = "";
-
     public static SpannableString formatContent(String desc, String who) {
         String content = String.format("%s(via. %s)", desc, who);
         SpannableString span = new SpannableString(content);

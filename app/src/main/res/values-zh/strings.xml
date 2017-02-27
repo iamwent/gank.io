@@ -19,7 +19,10 @@
 
     <string name="alert_submit">大爷，让子弹飞一会儿～</string>
     <string name="alert_submit_error">不好意思大爷，好像有点儿问题～</string>
-    <string name="alert_submit_success">老大, 所有提交数据一切正常!</string>
+    <string name="alert_submit_success">大爷, 所有提交数据一切正常!</string>
+    <string name="alert_submit_desc_too_short">大爷，干货描述太短啦～</string>
+    <string name="alert_submit_url_empty">大爷，干货地址别落了～</string>
+    <string name="alert_submit_url_error">大爷，干货地址好像有点问题～</string>
 
     <string name="alert_too_early">这一天 Gank 还没出生呢^_^</string>
     <string name="alert_too_late">未来的这一天我们会相遇的！</string>
@@ -28,5 +31,16 @@
     <string name="hint_search">在 Gank 搜一下</string>
     <string name="hint_url">干货 URL 地址</string>
 
-    <string name="content_good_gank">"阅读优秀干货的定义\n· 功能专一，文档完备，国际化，能加速开发的开源库或者框架\n· 新颖技术架构的完整 App 项目\n· 原创，深入浅出的文章（非简单入门）\n· 激发灵感的展示性项目"</string>
+    <string name="good_gank_title">优秀干货的定义：</string>
+    <string name="good_gank_content">\n
+        · 功能专一，文档完备，国际化\n
+        · 能加速开发的开源库或者框架\n
+        · 新颖技术架构的完整 App 项目\n
+        · 原创，深入浅出的文章（非简单入门）\n
+        · 激发灵感的展示性项目
+    </string>
+    <string name="label_submit_type">干货类型：</string>
+    <string name="label_submit_who">干货司机：</string>
+    <string name="hint_submit_who">壮士，你叫什么名字？</string>
+
 </resources>

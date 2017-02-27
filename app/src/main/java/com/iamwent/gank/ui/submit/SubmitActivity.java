@@ -1,7 +1,6 @@
 package com.iamwent.gank.ui.submit;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -124,7 +123,7 @@ public class SubmitActivity extends BaseActivity implements SubmitContract.View 
             return;
         }
 
-        String who = "None";
+        String who = getString(R.string.app_name);
 
         type = tvType.getText().toString();
 

@@ -96,6 +96,9 @@ class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.tv_content)
         TextView content;
 
+        @BindView(R.id.divider)
+        View divider;
+
         private Gank gank;
 
         ContentViewHolder(View itemView) {
@@ -108,6 +111,7 @@ class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             title.setText(gank.type);
             title.setVisibility(showTitle ? View.VISIBLE : View.GONE);
+            divider.setVisibility(showTitle ? View.VISIBLE : View.GONE);
 
             content.setText(SpannableUtil.formatContent(gank.desc, gank.who));
             content.setOnClickListener(v -> WebActivity.start(itemView.getContext(), gank.desc, gank.url));

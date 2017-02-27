@@ -3,33 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
         android:textSize="20sp"
+        android:textStyle="bold"
         android:visibility="gone"
         tools:text="Android"
         tools:visibility="visible" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:drawablePadding="8dp"
         android:drawableStart="@drawable/ic_ball"
         android:textColor="@android:color/black"
         android:textSize="16sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         tools:text="Android" />
 
 </LinearLayout>

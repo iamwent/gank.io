@@ -4,7 +4,7 @@ apply plugin: "me.tatarka.retrolambda"
 
 
 def gitVersionCode() {
-    def cmd = 'git rev-list HEAD --first-parent --count'
+    def cmd = 'git rev-list HEAD --count'
     cmd.execute().text.trim().toInteger()
 }
 

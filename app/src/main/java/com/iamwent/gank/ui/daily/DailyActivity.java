@@ -2,6 +2,8 @@ package com.iamwent.gank.ui.daily;
 
 import android.app.DatePickerDialog;
 import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +16,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.iamwent.gank.BuildConfig;
 import com.iamwent.gank.R;
 import com.iamwent.gank.data.GankRepository;
 import com.iamwent.gank.data.bean.Gank;
 import com.iamwent.gank.ui.base.BaseActivity;
 import com.iamwent.gank.ui.base.WebActivity;
+import com.iamwent.gank.ui.category.CategoryActivity;
 import com.iamwent.gank.util.DateUtil;
 
 import java.util.Calendar;
@@ -42,6 +46,11 @@ public class DailyActivity extends BaseActivity
     private int year;
     private int month;
     private int day;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, DailyActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected int provideContentViewLayoutResId() {
@@ -116,6 +125,9 @@ public class DailyActivity extends BaseActivity
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(true);
 
+        MenuItem menuItem = menu.findItem(R.id.action_by_category);
+        menuItem.setVisible(false);
+
         return true;
     }
 
@@ -126,6 +138,10 @@ public class DailyActivity extends BaseActivity
                 chooseOneDay();
                 return true;
             case R.id.action_search:
+                return true;
+            case R.id.action_by_category:
+                CategoryActivity.start(this);
+                finish();
                 return true;
             case R.id.action_setting:
                 return true;

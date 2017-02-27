@@ -24,6 +24,10 @@ interface CategoryContract {
     }
 
     interface Presenter extends BasePresenter {
-        void getType(String type);
+        void getType();
+
+        void refresh();
+
+        void loadMore();
     }
 }

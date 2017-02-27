@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.iamwent.gank.R;
 import com.iamwent.gank.ui.base.BaseActivity;
+import com.iamwent.gank.ui.daily.DailyActivity;
 
 import butterknife.BindView;
 
@@ -47,5 +50,30 @@ public class CategoryActivity extends BaseActivity {
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_category, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_by_calendar:
+                DailyActivity.start(this);
+                finish();
+                return true;
+            case R.id.action_search:
+                return true;
+            case R.id.action_setting:
+                return true;
+            case R.id.action_about:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

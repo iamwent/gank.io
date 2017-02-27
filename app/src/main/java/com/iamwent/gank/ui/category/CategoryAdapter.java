@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.iamwent.gank.R;
 import com.iamwent.gank.data.bean.Gank;
+import com.iamwent.gank.ui.base.WebActivity;
+import com.iamwent.gank.ui.image.ImageActivity;
 import com.iamwent.gank.util.SpannableUtil;
 
 import java.util.List;
@@ -30,7 +32,6 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private Context ctx;
     private List<Gank> ganks;
     private boolean isBeauty;
-    private OnItemClickListener listener;
 
     CategoryAdapter(Context ctx, List<Gank> ganks, boolean isBeauty) {
         this.ctx = ctx;
@@ -51,13 +52,6 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(ganks.get(position));
-
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                Gank gank = ganks.get(holder.getAdapterPosition());
-                listener.onItemClick(gank.desc, gank.url);
-            }
-        });
     }
 
     @Override
@@ -68,14 +62,6 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     void replace(List<Gank> ganks) {
         this.ganks = ganks;
         notifyDataSetChanged();
-    }
-
-    void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
-    interface OnItemClickListener {
-        void onItemClick(String title, String url);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -94,30 +80,53 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
         @BindView(R.id.iv_beauty)
         ImageView beauty;
 
+        private Gank gank;
+
         BeautyViewHolder(View itemView) {
             super(itemView);
         }
 
         @Override
-        void bind(Gank gank) {
+        void bind(Gank newGank) {
+            this.gank = newGank;
+
             Glide.with(itemView.getContext())
                     .load(gank.url)
                     .into(beauty);
+
+            beauty.setOnClickListener(v -> {
+                ImageActivity.start(itemView.getContext(), gank.url);
+            });
         }
     }
 
     static class GankViewHolder extends ViewHolder {
 
+        @BindView(R.id.tv_header)
+        TextView header;
+
         @BindView(R.id.tv_gank)
         TextView content;
+
+        private Gank gank;
 
         GankViewHolder(View itemView) {
             super(itemView);
         }
 
         @Override
-        void bind(Gank gank) {
-            content.setText(SpannableUtil.formatContent(gank.desc, gank.who));
+        void bind(Gank newGank) {
+            this.gank = newGank;
+
+            content.setText(gank.desc);
+
+            String who = gank.who == null ? "None" : gank.who;
+            String time = gank.publishedAt.substring(0, 10);
+            header.setText(String.format("%s\t\t%s", who, time));
+
+            itemView.setOnClickListener(v -> {
+                WebActivity.start(itemView.getContext(), gank.desc, gank.url);
+            });
         }
     }
 }

@@ -2,6 +2,7 @@ package com.iamwent.gank.ui.category;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,18 +26,21 @@ import butterknife.BindView;
  */
 
 public class CategoryFragment extends BaseFragment
-        implements CategoryContract.View, CategoryAdapter.OnItemClickListener {
+        implements CategoryContract.View {
 
     private static final String EXTRA_TYPE = "EXTRA_TYPE";
+
+    @BindView(R.id.root)
+    SwipeRefreshLayout refreshLayout;
 
     @BindView(R.id.rv_ganks)
     RecyclerView recyclerView;
 
     private CategoryAdapter adapter;
-    private List<Gank> ganks;
     private String type;
 
     private CategoryContract.Presenter presenter;
+    private LinearLayoutManager layoutManager;
 
     public static CategoryFragment newInstance(String type) {
 
@@ -66,16 +70,28 @@ public class CategoryFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ganks = new ArrayList<>();
         boolean isBeauty = "福利".equals(type);
-        adapter = new CategoryAdapter(getContext(), ganks, isBeauty);
-        adapter.setOnItemClickListener(this);
+        adapter = new CategoryAdapter(getContext(), null, isBeauty);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-        presenter = new CategoryPresenter(this, GankRepository.getInstance(getContext()));
-        presenter.getType(type);
+                int last = layoutManager.findLastVisibleItemPosition();
+                if (last + 3 > layoutManager.getItemCount()) {
+                    presenter.loadMore();
+                }
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(() -> presenter.refresh());
+
+        presenter = new CategoryPresenter(this, GankRepository.getInstance(getContext()), type);
+        presenter.getType();
     }
 
     @Override
@@ -90,12 +106,10 @@ public class CategoryFragment extends BaseFragment
 
     @Override
     public void showGankList(List<Gank> ganks) {
-        this.ganks.addAll(ganks);
-        adapter.replace(this.ganks);
-    }
+        adapter.replace(ganks);
 
-    @Override
-    public void onItemClick(String title, String url) {
-        WebActivity.start(getActivity(), title, url);
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
     }
 }

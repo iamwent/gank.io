@@ -5,10 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -38,8 +38,6 @@ public class CompactTabLayout extends TabLayout {
     private List<TextView> tabViews;
     private int[] tabWidths;
 
-    private @ColorInt int selectedTabIndicatorColor;
-
     public CompactTabLayout(Context context) {
         this(context, null);
     }
@@ -54,7 +52,7 @@ public class CompactTabLayout extends TabLayout {
         super(context, attrs, defStyleAttr);
         INDICATOR_HEIGHT = dpToPx(2);
         hoverPaint = new Paint();
-        hoverPaint.setColor(Color.RED);
+        hoverPaint.setColor(Color.WHITE);
         hoverPaint.setStyle(Paint.Style.FILL);
         tabViews = new ArrayList<>(tabCount);
         setSelectedTabIndicatorColor(Color.TRANSPARENT);

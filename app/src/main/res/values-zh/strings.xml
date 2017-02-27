@@ -4,7 +4,8 @@
 
     <string name="action_about">关于</string>
     <string name="action_calendar">日期</string>
-    <string name="action_category">干货类型</string>
+    <string name="action_by_category">分类浏览</string>
+    <string name="action_by_calendar">按日期浏览</string>
     <string name="action_copy_url">复制链接</string>
     <string name="action_open_url">打开链接</string>
     <string name="action_refresh">刷新</string>

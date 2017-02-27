@@ -47,11 +47,11 @@ public class WebActivity extends BaseActivity {
     private String title;
     private String url;
 
-    public static void start(Activity act, String title, String url) {
-        Intent starter = new Intent(act, WebActivity.class);
+    public static void start(Context ctx, String title, String url) {
+        Intent starter = new Intent(ctx, WebActivity.class);
         starter.putExtra(EXTRA_TITLE, title);
         starter.putExtra(EXTRA_URL, url);
-        act.startActivity(starter);
+        ctx.startActivity(starter);
     }
 
     @Override

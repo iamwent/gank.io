@@ -160,6 +160,7 @@ dependencies {
     compile "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
     compile "com.github.chrisbanes:PhotoView:${rootProject.ext.photoViewVersion}"
     compile "com.tbruyelle.rxpermissions2:rxpermissions:${rootProject.ext.rxpermissions2Version}"
+
     compile "com.jakewharton.timber:timber:${rootProject.ext.timberVersion}"
     compile "com.jakewharton:butterknife:${rootProject.ext.butterknifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.butterknifeVersion}"

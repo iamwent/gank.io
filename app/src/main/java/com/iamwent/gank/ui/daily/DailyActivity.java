@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class DailyActivity extends BaseActivity
-        implements DailyContract.View, DailyGankAdapter.OnItemClickListener {
+        implements DailyContract.View {
 
     @BindView(R.id.rv_daily)
     RecyclerView recyclerView;
@@ -55,7 +55,6 @@ public class DailyActivity extends BaseActivity
 
         List<Gank> ganks = Collections.emptyList();
         adapter = new DailyGankAdapter(this, ganks);
-        adapter.setOnItemClickListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -105,11 +104,6 @@ public class DailyActivity extends BaseActivity
             ivBg.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onItemClick(String title, String url) {
-        WebActivity.start(this, title, url);
     }
 
     @Override

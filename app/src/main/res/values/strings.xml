@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Gank.IO</string>
 
-    <string name="action_by_category">Category</string>
+    <string name="action_by_category">Scan by Category</string>
+    <string name="action_by_calendar">Scan by Calendar</string>
     <string name="action_calendar">Calendar</string>
     <string name="action_search">Search</string>
     <string name="action_setting">Setting</string>

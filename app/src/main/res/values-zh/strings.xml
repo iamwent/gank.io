@@ -18,6 +18,8 @@
     <string name="alert_request_write_external_storage">我们需要存储权限以保存图片！</string>
     <string name="alert_save_image">是否保存图片到本地？</string>
 
+    <string name="alert_fetching">大爷，让子弹飞一会儿～</string>
+
     <string name="alert_submit">大爷，让子弹飞一会儿～</string>
     <string name="alert_submit_error">不好意思大爷，好像有点儿问题～</string>
     <string name="alert_submit_success">大爷, 所有提交数据一切正常!</string>

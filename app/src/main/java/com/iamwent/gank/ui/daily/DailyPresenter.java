@@ -34,10 +34,11 @@ class DailyPresenter implements DailyContract.Presenter {
 
     @Override
     public void getDaily(int year, int month, int day) {
+        view.changeProgress(true);
+
         repository.getDaily(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> view.changeProgress(true))
                 .subscribe(new Observer<DailyResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {

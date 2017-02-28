@@ -94,6 +94,15 @@ public class WebActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        if (webView != null) {
+            webView.destroy();
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
             webView.goBack();

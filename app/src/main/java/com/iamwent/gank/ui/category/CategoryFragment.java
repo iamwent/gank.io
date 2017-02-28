@@ -1,5 +1,6 @@
 package com.iamwent.gank.ui.category;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,6 +42,8 @@ public class CategoryFragment extends BaseFragment
 
     private CategoryContract.Presenter presenter;
     private LinearLayoutManager layoutManager;
+
+    private ProgressDialog dialog;
 
     public static CategoryFragment newInstance(String type) {
 
@@ -91,12 +94,33 @@ public class CategoryFragment extends BaseFragment
         refreshLayout.setOnRefreshListener(() -> presenter.refresh());
 
         presenter = new CategoryPresenter(this, GankRepository.getInstance(getContext()), type);
-        presenter.getType();
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.unsubscribe();
+
+        super.onDestroy();
     }
 
     @Override
     public void changeProgress(boolean isShow) {
+        if (isShow) {
+            if (dialog == null) {
+                dialog = new ProgressDialog(getContext());
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setCancelable(false);
+                dialog.setMessage(getString(R.string.alert_fetching));
+                dialog.create();
+            }
 
+            dialog.show();
+        } else {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
     }
 
     @Override

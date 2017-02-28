@@ -38,6 +38,7 @@ class CategoryPresenter implements CategoryContract.Presenter {
 
     @Override
     public void getType() {
+
         repository.getCategory(type, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -87,12 +88,15 @@ class CategoryPresenter implements CategoryContract.Presenter {
 
     @Override
     public void subscribe() {
+        view.changeProgress(true);
 
+        getType();
     }
 
     @Override
     public void unsubscribe() {
         disposable.clear();
+
         this.view = null;
     }
 }

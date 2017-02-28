@@ -1,6 +1,8 @@
 package com.iamwent.gank.ui.daily;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import com.iamwent.gank.util.DateUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,6 +49,8 @@ public class DailyActivity extends BaseActivity
     private int year;
     private int month;
     private int day;
+
+    private ProgressDialog dialog;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, DailyActivity.class);
@@ -95,7 +100,21 @@ public class DailyActivity extends BaseActivity
 
     @Override
     public void changeProgress(boolean isShow) {
+        if (isShow) {
+            if (dialog == null) {
+                dialog = new ProgressDialog(this);
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setCancelable(false);
+                dialog.setMessage(getString(R.string.alert_fetching));
+                dialog.create();
+            }
 
+            dialog.show();
+        } else {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
     }
 
     @Override
@@ -126,7 +145,7 @@ public class DailyActivity extends BaseActivity
         searchView.setIconifiedByDefault(true);
 
         MenuItem menuItem = menu.findItem(R.id.action_by_category);
-        menuItem.setVisible(false);
+        menuItem.setVisible(BuildConfig.DEBUG);
 
         return true;
     }

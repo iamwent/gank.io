@@ -28,6 +28,8 @@
     <string name="alert_too_early">这一天 Gank 还没出生呢^_^</string>
     <string name="alert_too_late">未来的这一天我们会相遇的！</string>
 
+    <string name="alert_fetching">Fetching~</string>
+
     <string name="alert_submit">Submitting…</string>
     <string name="alert_submit_success">老大, 所有提交数据一切正常!</string>
     <string name="alert_submit_error">Ops！有点问题，快检查一下～</string>

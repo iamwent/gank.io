@@ -6,7 +6,7 @@ Yet another Android Client for gank.io
 
 ## Screenshots
 
-<img src="./screenshot/banner.png"/>
+<img src="./screenshot/banner.jpg"/>
 
 <br/>
 

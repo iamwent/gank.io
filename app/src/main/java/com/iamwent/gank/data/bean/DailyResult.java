@@ -68,6 +68,10 @@ public class DailyResult {
             ganks.addAll(app);
         }
 
+        if (video != null) {
+            ganks.addAll(video);
+        }
+
         return ganks;
     }
 }

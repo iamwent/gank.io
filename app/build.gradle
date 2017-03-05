@@ -3,12 +3,12 @@ apply plugin: 'com.android.application'
 apply plugin: "me.tatarka.retrolambda"
 
 
-def gitVersionCode() {
+static def gitVersionCode() {
     def cmd = 'git rev-list HEAD --count'
     cmd.execute().text.trim().toInteger()
 }
 
-def gitVersionTag() {
+static def gitVersionTag() {
     def cmd = 'git describe --tags'
     def version = cmd.execute().text.trim()
 
@@ -81,7 +81,7 @@ android {
 
             // Avoid heavy computations
             applicationVariants.all { variant ->
-                if (variant.buildType.name.equals('release')) {
+                if (variant.buildType.name == 'release') {
 
                     def code = gitVersionCode();
                     def name = gitVersionTag();
@@ -116,8 +116,8 @@ android {
 
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
-        if (variant.buildType.name.equals('release') &&
-                variant.getFlavors().get(0).name.equals('mock')) {
+        if (variant.buildType.name == 'release' &&
+                variant.getFlavors().get(0).name == 'mock') {
             // remove mock release
             variant.setIgnore(true);
         }

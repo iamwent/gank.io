@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.iamwent.gank.R;
+import com.iamwent.gank.app.GankApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +40,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         setDisplayHomeAsUpEnabled(true);
 
         Timber.tag(getClass().getSimpleName());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        GankApplication.getRefWatcher(this).watch(this);
     }
 
     protected void setDisplayHomeAsUpEnabled(boolean showHomeAsUp) {

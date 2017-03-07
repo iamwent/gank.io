@@ -45,5 +45,6 @@
     <string name="label_submit_type">干货类型：</string>
     <string name="label_submit_who">干货司机：</string>
     <string name="hint_submit_who">壮士，你叫什么名字？</string>
+    <string name="alert_open_url_failed">大爷，打不开啊～</string>
 
 </resources>

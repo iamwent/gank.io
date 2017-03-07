@@ -35,8 +35,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ImageActivity extends BaseActivity {
 
-    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 110;
-
     @BindView(R.id.iv_img)
     ImageView imageView;
 
@@ -106,9 +104,7 @@ public class ImageActivity extends BaseActivity {
 
     private void saveToLocal() {
         saveImageToGallery()
-                .subscribe(uri -> {
-                    Toast.makeText(ImageActivity.this, "saved " + uri.getPath(), Toast.LENGTH_SHORT).show();
-                });
+                .subscribe(uri -> Toast.makeText(ImageActivity.this, "saved " + uri.getPath(), Toast.LENGTH_SHORT).show());
     }
 
     private Observable<Uri> saveImageToGallery() {
@@ -119,7 +115,7 @@ public class ImageActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Function<Boolean, ObservableSource<Uri>>() {
                     @Override
-                    public ObservableSource<Uri> apply(Boolean aBoolean) throws Exception {
+                    public ObservableSource<Uri> apply(Boolean granted) throws Exception {
                         Bitmap bitmap = imageView.getDrawingCache();
                         int start = url.lastIndexOf('/') + 1;
                         int end = url.length();

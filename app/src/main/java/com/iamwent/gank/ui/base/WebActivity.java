@@ -1,6 +1,5 @@
 package com.iamwent.gank.ui.base;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -20,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.iamwent.gank.R;
+import com.iamwent.gank.util.Toasts;
 
 import butterknife.BindView;
 
@@ -154,7 +154,7 @@ public class WebActivity extends BaseActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-//            Toasts.showLong(R.string.tip_open_fail);
+            Toasts.showLong(R.string.alert_open_url_failed);
         }
     }
 }

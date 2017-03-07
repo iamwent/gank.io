@@ -12,8 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Created by iamwent on 25/02/2017.
@@ -31,37 +29,34 @@ public final class BitmapUtil {
 
     private static Observable<String> saveImage(@NonNull Bitmap bitmap, @NonNull String fileName) {
 
-        return Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                File file = new File(dir, fileName);
+        return Observable.create(emitter -> {
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            File file = new File(dir, fileName);
 
-                String path = file.getAbsolutePath();
+            String path = file.getAbsolutePath();
 
-                FileOutputStream out = null;
+            FileOutputStream out = null;
+            try {
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                out = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+
+                emitter.onNext(path);
+                emitter.onComplete();
+            } catch (IOException e) {
+                emitter.onError(e);
+            } finally {
                 try {
-                    if (!file.exists()) {
-                        file.createNewFile();
+                    if (out != null) {
+                        out.close();
                     }
-
-                    out = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                    out.flush();
-                    out.close();
-
-                    emitter.onNext(path);
-                    emitter.onComplete();
                 } catch (IOException e) {
-                    emitter.onError(e);
-                } finally {
-                    try {
-                        if (out != null) {
-                            out.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    e.printStackTrace();
                 }
             }
         });

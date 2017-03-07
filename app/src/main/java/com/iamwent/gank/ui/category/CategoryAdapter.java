@@ -94,9 +94,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
                     .load(gank.url)
                     .into(beauty);
 
-            beauty.setOnClickListener(v -> {
-                ImageActivity.start(itemView.getContext(), gank.url);
-            });
+            beauty.setOnClickListener(v -> ImageActivity.start(itemView.getContext(), gank.url));
         }
     }
 
@@ -124,9 +122,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
             String time = gank.publishedAt.substring(0, 10);
             header.setText(String.format("%s\t\t%s", who, time));
 
-            itemView.setOnClickListener(v -> {
-                WebActivity.start(itemView.getContext(), gank.desc, gank.url);
-            });
+            itemView.setOnClickListener(v -> WebActivity.start(itemView.getContext(), gank.desc, gank.url));
         }
     }
 }

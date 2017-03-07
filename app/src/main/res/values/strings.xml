@@ -56,4 +56,8 @@
     <string name="label_submit_who">Submitter:</string>
     <string name="hint_submit_who">Your name, or github id</string>
 
+    <string name="alert_open_url_failed">No application hold this action</string>
+
+    <string name="leak_canary_display_activity_label" translatable="false">Gank Leaks</string>
+
 </resources>

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iamwent.gank.app.GankApplication;
+
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -36,5 +38,12 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(provideViewLayoutResId(), container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        GankApplication.getRefWatcher(getContext()).watch(this);
     }
 }

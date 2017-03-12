@@ -148,7 +148,7 @@ class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {
 
-        public FooterViewHolder(View itemView) {
+        FooterViewHolder(View itemView) {
             super(itemView);
         }
     }

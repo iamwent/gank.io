@@ -38,8 +38,9 @@ public interface GankApi {
                                                      @Path("page") int page);
 
     // 搜索 API
-    @GET("search/query/{searchKey}/category/{searchCategory}/count/{searchCount}/page/{searchPage}")
-    Observable<BaseResponse<List<Search>>> search(@Path("searchKey") String key,
+    // hsearch/query/listview/category/Android/count/10/page/1
+    @GET("search/query/{key}/category/{type}/count/{count}/page/{page}")
+    Observable<BaseResponse<List<Search>>> search(@Path("key") String key,
                                                   @Path("type") String type,
                                                   @Path("count") int count,
                                                   @Path("page") int page);

@@ -45,14 +45,11 @@ public class GankLocalDataSource {
     }
 
     public Observable<Record> getGankByDate(int year, int month, int day) {
-        return Observable.create(new ObservableOnSubscribe<Record>() {
-            @Override
-            public void subscribe(ObservableEmitter<Record> emitter) throws Exception {
-                String date = String.format(Locale.getDefault(), "%d-%d-%d", year, month, day);
-                Record record = orm.queryById(date, Record.class);
-                if (record != null && record.ganks != null) {
-                    emitter.onNext(record);
-                }
+        return Observable.create(emitter -> {
+            String date = String.format(Locale.getDefault(), "%d-%d-%d", year, month, day);
+            Record record = orm.queryById(date, Record.class);
+            if (record != null && record.ganks != null) {
+                emitter.onNext(record);
             }
         });
     }

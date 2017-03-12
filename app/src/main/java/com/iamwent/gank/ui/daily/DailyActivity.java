@@ -67,8 +67,7 @@ public class DailyActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setDisplayHomeAsUpEnabled(false);
 
-        List<Gank> ganks = Collections.emptyList();
-        adapter = new DailyGankAdapter(this, ganks);
+        adapter = new DailyGankAdapter(this, Collections.emptyList());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

@@ -1,5 +1,5 @@
 /build
 *.iml
-gradle.properties
+*.properties
 *.jks
 *.apk

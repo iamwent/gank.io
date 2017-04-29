@@ -19,8 +19,12 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <meta-data
-            android:name="BUGLY_CHANNEL"
-            android:value="${BUGLY_CHANNEL_VALUE}" />
+            android:name="CHANNEL_NAME"
+            android:value="${CHANNEL_VALUE}" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a9f4e15e2faa80a196cf0dfac308552a28b3857b" />
 
         <activity
             android:name=".ui.daily.DailyActivity"

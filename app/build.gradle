@@ -1,6 +1,20 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.22.0'
+    }
+}
 
 apply plugin: 'com.android.application'
 apply plugin: "me.tatarka.retrolambda"
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 
 static def gitVersionCode() {
@@ -35,7 +49,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "google"]
+        manifestPlaceholders = [CHANNEL_VALUE: "google"]
 
         resConfigs "en", "zh"
 
@@ -111,7 +125,7 @@ android {
     }
 
     productFlavors.all { flavor ->
-        flavor.manifestPlaceholders = [BUGLY_CHANNEL_VALUE: name]
+        flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
     }
 
     // Remove mockRelease as it's not needed.
@@ -122,7 +136,6 @@ android {
             variant.setIgnore(true);
         }
     }
-
 
     lintOptions {
         textReport true
@@ -139,13 +152,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-
     // android
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:design:${rootProject.ext.supportVersion}"
     compile "com.android.support:support-annotations:${rootProject.ext.supportVersion}"
-
 
     // library
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjavaVersion}"
@@ -164,12 +175,14 @@ dependencies {
     compile "com.jakewharton:butterknife:${rootProject.ext.butterknifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.butterknifeVersion}"
 
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
 
     // leakcanary
     debugCompile "com.squareup.leakcanary:leakcanary-android:${rootProject.ext.leakcanaryVersion}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
-    compile 'com.tencent.bugly:crashreport:latest.release'
 
     // unit test
     testCompile "junit:junit:${rootProject.ext.junitVersion}"

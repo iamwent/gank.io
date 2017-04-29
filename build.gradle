@@ -4,8 +4,9 @@ buildscript {
     repositories {
         jcenter()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
 
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
     }
@@ -29,10 +30,10 @@ project.ext {
     buildToolsVersion = "25.0.2"
 
     // Android
-    supportVersion = '25.2.0'
+    supportVersion = '25.3.1'
 
     // Libraries
-    rxjavaVersion = '2.0.4'
+    rxjavaVersion = '2.0.9'
     rxandroidVersion = '2.0.1'
     retrofit2Version = '2.2.0'
     okhttp3Version = '3.5.0'

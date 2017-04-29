@@ -4,10 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
 
+import com.crashlytics.android.Crashlytics;
 import com.iamwent.gank.BuildConfig;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.tencent.bugly.crashreport.CrashReport;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by iamwent on 26/02/2017.
@@ -28,11 +30,9 @@ public class GankApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         toggleStrictMode(BuildConfig.DEBUG);
-
-        // init bugly
-        CrashReport.initCrashReport(getApplicationContext(), "094e5020cb", BuildConfig.DEBUG);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;

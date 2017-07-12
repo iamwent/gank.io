@@ -1,14 +1,17 @@
 package com.iamwent.gank.ui.category;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.iamwent.gank.BuildConfig;
 import com.iamwent.gank.R;
 import com.iamwent.gank.ui.base.BaseActivity;
 import com.iamwent.gank.ui.daily.DailyActivity;
@@ -55,6 +58,12 @@ public class CategoryActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_category, menu);
+
+        MenuItem searchMenu = menu.findItem(R.id.action_search);
+        SearchManager manager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        SearchView searchView = (SearchView) searchMenu.getActionView();
+        searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
 
         return true;
     }

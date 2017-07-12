@@ -1,5 +1,6 @@
 package com.iamwent.gank.ui.search;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,6 +66,10 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     private SearchResultAdapter adapter;
     private SearchContract.Presenter presenter;
 
+    private ProgressDialog dialog;
+
+    private String query;
+
     @Override
     protected int provideContentViewLayoutResId() {
         return R.layout.activity_search;
@@ -75,7 +80,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
         super.onCreate(savedInstanceState);
 
         if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
-            String query = getIntent().getStringExtra(SearchManager.QUERY);
+            query = getIntent().getStringExtra(SearchManager.QUERY);
 
             Toast.makeText(this, "query", Toast.LENGTH_SHORT).show();
 
@@ -88,6 +93,8 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
         presenter = new SearchPresenter(this, GankRepository.getInstance(this));
         presenter.subscribe();
+
+        presenter.search(query, ALL);
     }
 
     private void initView() {
@@ -105,13 +112,22 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     }
 
     @Override
-    public boolean onSearchRequested() {
-        return super.onSearchRequested();
-    }
-
-    @Override
     public void changeProgress(boolean isShow) {
+        if (isShow) {
+            if (dialog == null) {
+                dialog = new ProgressDialog(this);
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setCancelable(false);
+                dialog.setMessage(getString(R.string.alert_fetching));
+                dialog.create();
+            }
 
+            dialog.show();
+        } else {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
     }
 
     @Override
@@ -121,6 +137,6 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void showSearchResults(List<Search> results) {
-
+        adapter.replace(results);
     }
 }

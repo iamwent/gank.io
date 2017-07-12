@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  * @since 12/03/2017
  */
 
-public class SearchPresenter implements SearchContract.Presenter {
+class SearchPresenter implements SearchContract.Presenter {
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -33,7 +33,7 @@ public class SearchPresenter implements SearchContract.Presenter {
     private String key;
     private String type;
 
-    public SearchPresenter(SearchContract.View view, GankRepository repository) {
+    SearchPresenter(SearchContract.View view, GankRepository repository) {
         this.view = view;
         this.repository = repository;
     }

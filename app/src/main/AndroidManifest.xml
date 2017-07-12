@@ -37,7 +37,7 @@
             </intent-filter>
 
             <meta-data
-                android:name="android.app.searchable"
+                android:name="android.app.default_searchable"
                 android:value="com.iamwent.gank.ui.search.SearchActivity" />
         </activity>
 
